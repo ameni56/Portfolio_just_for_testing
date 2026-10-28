@@ -1,0 +1,200 @@
+/* Conteneurs et sections */
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Navigation Bootstrap */
+.portfolio-navbar {
+  min-height: 80px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  z-index: 1030;
+}
+
+.portfolio-navbar .container {
+  min-height: 80px;
+}
+
+.portfolio-navbar .logo {
+  margin-right: 0;
+  color: var(--ink);
+  font: 700 22px "Space Grotesk", sans-serif;
+  text-decoration: none;
+}
+
+.portfolio-navbar .logo:hover {
+  color: var(--ink);
+}
+
+.portfolio-navbar .logo i {
+  color: var(--accent);
+  font-style: normal;
+}
+
+.portfolio-navbar .navbar-nav {
+  gap: 20px;
+}
+
+.portfolio-navbar .nav-link {
+  padding: 8px 0;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 500;
+  transition: color .2s ease;
+}
+
+.portfolio-navbar .nav-link:hover,
+.portfolio-navbar .nav-link:focus {
+  color: var(--accent);
+}
+
+.portfolio-navbar .nav-contact {
+  margin-left: 8px;
+}
+
+.portfolio-navbar .navbar-toggler {
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.portfolio-navbar .navbar-toggler:focus {
+  box-shadow: 0 0 0 3px rgb(124 58 237 / 20%);
+}
+
+.portfolio-navbar .navbar-toggler-icon {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 18px;
+  background-image: none;
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+
+.portfolio-navbar .navbar-toggler-icon::after {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 100%;
+  border-top: 2px solid var(--ink);
+  content: "";
+}
+
+/* Accueil / Hero */
+.hero .container {
+  position: relative;
+}
+
+.hero .row {
+  min-height: 420px;
+}
+
+.name {
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.hero p {
+  max-width: 540px;
+  margin-bottom: 32px;
+  color: var(--muted);
+}
+
+.art {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  padding: 32px;
+  border-radius: 28px;
+  background: #111827;
+  color: #F9FAFB;
+  font: 500 15px/1.8 ui-monospace, Menlo, monospace;
+}
+
+.art .c1 {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: #7C3AED;
+}
+
+.art .c2 {
+  position: absolute;
+  bottom: 32px;
+  left: 32px;
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  background: #A3E635;
+}
+
+.art pre {
+  position: relative;
+  z-index: 1;
+  margin-top: 60px;
+  color: inherit;
+  font: inherit;
+  white-space: pre-wrap;
+}
+
+/* À propos */
+.about {
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  align-items: center;
+  gap: 56px;
+}
+
+.about p {
+  margin-bottom: 16px;
+  color: var(--muted);
+}
+
+.cv {
+  margin-top: 12px;
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 28px;
+}
+
+/* Pied de page */
+footer {
+  padding: 32px 0;
+  background: #111827;
+  color: #F9FAFB;
+  font-size: 14px;
+}
+
+footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+footer a {
+  margin-right: 20px;
+  color: #A3E635;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #FFFFFF;
+}

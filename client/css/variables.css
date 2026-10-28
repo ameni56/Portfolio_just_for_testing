@@ -1,0 +1,33 @@
+/* Couleurs et thèmes */
+:root {
+  --ink: #111827;
+  --accent: #7C3AED;
+  --lime: #A3E635;
+  --bg: #F9FAFB;
+  --card: #FFFFFF;
+  --muted: #4B5563;
+  --line: #E5E7EB;
+  --danger: #B91C1C;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #F9FAFB;
+    --bg: #0B1020;
+    --card: #151B2E;
+    --muted: #A8B0C0;
+    --line: #273049;
+    --accent: #A78BFA;
+    --danger: #FCA5A5;
+  }
+}
+
+:root[data-theme="dark"] {
+  --ink: #F9FAFB;
+  --bg: #0B1020;
+  --card: #151B2E;
+  --muted: #A8B0C0;
+  --line: #273049;
+  --accent: #A78BFA;
+  --danger: #FCA5A5;
+}

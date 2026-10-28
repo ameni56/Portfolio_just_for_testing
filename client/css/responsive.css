@@ -1,0 +1,146 @@
+/* Tablettes et mobiles */
+@media (max-width: 991.98px) {
+  body {
+    font-size: 16px;
+  }
+
+  section {
+    padding: 64px 0;
+  }
+
+  .wrap {
+    padding: 0 20px;
+  }
+
+  h1 {
+    font-size: clamp(36px, 7vw, 48px);
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  .portfolio-navbar .navbar-collapse {
+    padding: 12px 0 20px;
+  }
+
+  .portfolio-navbar .navbar-nav {
+    align-items: stretch !important;
+    gap: 0;
+  }
+
+  .portfolio-navbar .nav-link {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .portfolio-navbar .nav-contact {
+    margin: 16px 0 0;
+    text-align: center;
+  }
+
+  .hero .row {
+    min-height: auto;
+  }
+
+  .hero .art {
+    max-width: 560px;
+  }
+
+  .about {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .photo {
+    max-width: 420px;
+  }
+
+  .grid4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .grid3 {
+    grid-template-columns: 1fr;
+  }
+
+  .cta .btn,
+  #contact-form .btn {
+    width: 100%;
+  }
+
+  dialog {
+    padding: 24px;
+    border-radius: 20px;
+  }
+
+  .scores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 575.98px) {
+  .cta {
+    flex-direction: column;
+  }
+
+  .cta .btn {
+    width: 100%;
+  }
+
+  .art {
+    padding: 24px;
+    border-radius: 20px;
+    font-size: 13px;
+  }
+
+  .art pre {
+    margin-top: 48px;
+  }
+
+  .grid4 {
+    grid-template-columns: 1fr;
+  }
+
+  dialog {
+    width: calc(100% - 20px);
+    max-height: calc(100dvh - 20px);
+    padding: 20px;
+  }
+
+  .scores {
+    gap: 8px;
+  }
+
+  .score {
+    padding: 10px 6px;
+  }
+
+  .score b {
+    font-size: 24px;
+  }
+
+  .caps {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Accessibilité : réduire les animations */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
