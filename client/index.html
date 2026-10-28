@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Ameni Hajri — Développeuse web</title>
+  <meta
+    name="description"
+    content="Portfolio d'Ameni Hajri, développeuse web React & Node.js."
+  >
+
+  <!-- Polices Google Fonts -->
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+  >
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- CSS personnalisé -->
+   <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg portfolio-navbar sticky-top">
+    <div class="container">
+
+      <a class="navbar-brand logo" href="#top">
+        Ameni<i>.</i>dev
+      </a>
+
+      <button
+        class="navbar-toggler burger"
+        id="burger"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#links"
+        aria-controls="links"
+        aria-expanded="false"
+        aria-label="Ouvrir le menu"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse links" id="links">
+        <div class="navbar-nav ms-auto align-items-lg-center">
+          <a class="nav-link" href="#about">À propos</a>
+          <a class="nav-link" href="#skills">Compétences</a>
+          <a class="nav-link" href="#projects">Projets</a>
+          <a class="nav-link" href="#contact">Contact</a>
+          <a class="btn p nav-contact" href="#contact">Me contacter</a>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- Accueil -->
+    <section class="hero">
+      <div class="container">
+        <div class="row align-items-center g-5">
+
+          <div class="col-lg-7">
+            <div class="name">Ameni Hajri</div>
+
+            <h1>
+              Développeuse web
+              <span>React &amp; Node.js</span>
+            </h1>
+
+            <p>
+              Je conçois et développe des interfaces web modernes,
+              responsives et accessibles, de l'intégration frontend
+              jusqu'au backend.
+            </p>
+
+            <div class="cta">
+              <a class="btn p" href="#projects">
+                Découvrir mes projets
+              </a>
+
+              <a class="btn s" href="#contact">
+                Me contacter
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="art" aria-hidden="true">
+              <div class="c1"></div>
+              <div class="c2"></div>
+
+<pre>const dev = {
+  nom: "Ameni",
+  stack: ["React", "Node"],
+  accessible: true
+};</pre>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- À propos -->
+    <section id="about">
+      <div class="wrap about">
+
+        <div class="photo">
+          Photo ou illustration
+        </div>
+
+        <div>
+          <div class="eyebrow">À propos</div>
+          <h2>Qui suis-je ?</h2>
+
+          <p>
+            Développeuse web formée via OpenClassrooms, j'aime
+            transformer des idées en expériences numériques utiles
+            et soignées.
+          </p>
+
+          <p>
+            Objectif : rejoindre une équipe où je peux contribuer
+            au frontend comme au backend et continuer à progresser.
+          </p>
+
+          <a
+            class="btn s cv"
+            href="assets/cv/CV_Ameni_Hajri.pdf"
+            download
+          >
+            Télécharger mon CV
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Compétences -->
+    <section id="skills">
+      <div class="wrap">
+        <div class="eyebrow">Compétences</div>
+        <h2>Ma boîte à outils</h2>
+
+        <p class="lead">
+          Des technologies que j'ai réellement utilisées sur mes projets.
+        </p>
+
+        <!-- Généré par js/main.js à partir de js/data.js -->
+        <div class="grid4" id="skills-grid"></div>
+      </div>
+    </section>
+
+    <!-- Projets -->
+    <section id="projects">
+      <div class="wrap">
+        <div class="eyebrow">Projets</div>
+        <h2>Mes réalisations</h2>
+
+        <p class="lead">
+          Six projets OpenClassrooms, du site statique à l'API sécurisée.
+          Ouvre une fiche pour le détail.
+        </p>
+
+        <!-- Généré par js/main.js à partir de js/data.js -->
+        <div class="grid3" id="projects-grid"></div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="eyebrow">Contact</div>
+        <h2>Un projet en tête ? Parlons-en.</h2>
+
+        <p class="lead">
+          Écris-moi, je réponds rapidement.
+        </p>
+
+        <form id="contact-form" novalidate>
+
+          <div>
+            <label for="n">Nom</label>
+            <input
+              id="n"
+              name="nom"
+              placeholder="Votre nom"
+              autocomplete="name"
+              required
+            >
+            <small class="err" id="n-err"></small>
+          </div>
+
+          <div>
+            <label for="e">Email</label>
+            <input
+              id="e"
+              name="email"
+              type="email"
+              placeholder="vous@exemple.com"
+              autocomplete="email"
+              required
+            >
+            <small class="err" id="e-err"></small>
+          </div>
+
+          <div>
+            <label for="m">Message</label>
+            <textarea
+              id="m"
+              name="message"
+              placeholder="Votre message"
+              required
+            ></textarea>
+            <small class="err" id="m-err"></small>
+          </div>
+
+          <button class="btn p" type="submit">
+            Envoyer
+          </button>
+
+          <p
+            class="form-msg"
+            id="form-msg"
+            role="status"
+            aria-live="polite"
+          ></p>
+
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Pied de page -->
+  <footer>
+    <div class="wrap">
+
+      <div>
+        <a href="#" id="link-github">GitHub</a>
+        <a href="#" id="link-linkedin">LinkedIn</a>
+      </div>
+
+      <div>
+        © <span id="year">2026</span> Ameni Hajri
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Fiche projet -->
+  <dialog id="project-dialog" aria-labelledby="dialog-title">
+    <button
+      class="dialog-close"
+      id="dialog-close"
+      type="button"
+      aria-label="Fermer la fiche"
+    >×</button>
+
+    <div id="dialog-body"></div>
+  </dialog>
+
+  <!-- Données et fonctionnalités du portfolio -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- JavaScript Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
