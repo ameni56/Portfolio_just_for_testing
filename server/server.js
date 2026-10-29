@@ -1,6 +1,5 @@
 
 const express = require("express");
-const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
@@ -9,78 +8,47 @@ dotenv.config({ path: path.join(__dirname, ".env") });
 
 const app = express();
 
-// 1. Configuration CORS
-app.use(cors({
-  origin: [
-    "http://localhost:5500",
-    "http://127.0.0.1:5500",
-    "https://ameni56.github.io"
-  ],
-  methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type"]
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5500",
+      "http://127.0.0.1:5500",
+      "https://ameni56.github.io"
+    ],
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"]
+  })
+);
 
 app.use(express.json({ limit: "10kb" }));
 
-// 2. Vérifier le démarrage du serveur
-console.log("=== DÉMARRAGE DU SERVEUR ===");
-console.log("PORT défini :", process.env.PORT || 3000);
-console.log("GMAIL_USER présent :", Boolean(process.env.GMAIL_USER));
-console.log(
-  "GMAIL_APP_PASSWORD présent :",
-  Boolean(process.env.GMAIL_APP_PASSWORD)
-);
-console.log(
-  "CONTACT_RECEIVER présent :",
-  Boolean(process.env.CONTACT_RECEIVER)
-);
-
-// 3. Vérifier que l'API fonctionne
+// Vérifier que l'API fonctionne.
 app.get("/api/health", (req, res) => {
-  console.log("[HEALTH] Requête reçue");
-
-  res.json({
+  res.status(200).json({
     success: true,
     message: "API opérationnelle"
   });
 });
 
-// 4. Configuration Gmail
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD
-  }
-});
+// Vérifier la configuration sans afficher les secrets.
+console.log("=== DÉMARRAGE DU SERVEUR ===");
+console.log("RESEND_API_KEY présente :", Boolean(process.env.RESEND_API_KEY));
+console.log("CONTACT_RECEIVER présent :", Boolean(process.env.CONTACT_RECEIVER));
 
-// 5. Tester la connexion SMTP au démarrage
-transporter.verify()
-  .then(() => {
-    console.log("[SMTP] Connexion Gmail réussie.");
-  })
-  .catch((error) => {
-    console.error("[SMTP] ÉCHEC DE CONNEXION");
-    console.error("Nom :", error.name);
-    console.error("Code :", error.code);
-    console.error("Commande :", error.command);
-    console.error("Réponse SMTP :", error.response);
-    console.error("Message :", error.message);
-  });
-
-// 6. Réception du formulaire
 app.post("/api/contact", async (req, res) => {
   console.log("\n========== NOUVELLE SOUMISSION ==========");
   console.log("[1] Requête POST /api/contact reçue");
-  console.log("Origine :", req.headers.origin);
-  console.log("Corps reçu :", {
-    nomPresent: typeof req.body?.nom === "string",
-    emailPresent: typeof req.body?.email === "string",
-    messagePresent: typeof req.body?.message === "string"
-  });
 
   try {
-    // 7. Validation des champs
+    if (!process.env.RESEND_API_KEY || !process.env.CONTACT_RECEIVER) {
+      console.error("[CONFIG] RESEND_API_KEY ou CONTACT_RECEIVER manquante.");
+
+      return res.status(500).json({
+        success: false,
+        message: "Configuration du serveur incomplète."
+      });
+    }
+
     const { nom, email, message } = req.body || {};
 
     if (
@@ -91,8 +59,6 @@ app.post("/api/contact", async (req, res) => {
       !email.trim() ||
       !message.trim()
     ) {
-      console.error("[2] ÉCHEC : champs manquants ou invalides");
-
       return res.status(400).json({
         success: false,
         message: "Tous les champs sont obligatoires."
@@ -109,69 +75,65 @@ app.post("/api/contact", async (req, res) => {
       cleanMessage.length > 5000 ||
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)
     ) {
-      console.error("[2] ÉCHEC : format ou longueur invalide");
-
       return res.status(400).json({
         success: false,
         message: "Les données du formulaire sont invalides."
       });
     }
 
-    console.log("[2] Validation réussie");
+    console.log("[2] Validation réussie.");
+    console.log("[3] Envoi via l'API HTTPS Resend...");
 
-    // 8. Vérifier la configuration, sans afficher les secrets
-    if (
-      !process.env.GMAIL_USER ||
-      !process.env.GMAIL_APP_PASSWORD ||
-      !process.env.CONTACT_RECEIVER
-    ) {
-      console.error("[3] ÉCHEC : variable d'environnement manquante");
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        from: "Portfolio Ameni <onboarding@resend.dev>",
+        to: [process.env.CONTACT_RECEIVER],
+        reply_to: cleanEmail,
+        subject: `Nouveau message du portfolio : ${cleanNom}`,
+        text: [
+          `Nom : ${cleanNom}`,
+          `Email : ${cleanEmail}`,
+          "",
+          "Message :",
+          cleanMessage
+        ].join("\n")
+      }),
+      signal: AbortSignal.timeout(20000)
+    });
 
-      return res.status(500).json({
+    const result = await response.json();
+
+    if (!response.ok) {
+      console.error("[RESEND] Échec de l'envoi :", {
+        status: response.status,
+        name: result.name,
+        message: result.message
+      });
+
+      return res.status(502).json({
         success: false,
-        message: "Configuration du serveur incomplète."
+        message: "Le service d'envoi n'a pas accepté le message."
       });
     }
 
-    console.log("[3] Variables d'environnement présentes");
-    console.log("[4] Début de l'envoi Gmail...");
-
-    // 9. Envoyer l'e-mail
-    const info = await transporter.sendMail({
-      from: `"Portfolio Ameni" <${process.env.GMAIL_USER}>`,
-      to: process.env.CONTACT_RECEIVER,
-      replyTo: cleanEmail,
-      subject: `Nouveau message du portfolio : ${cleanNom}`,
-      text: [
-        `Nom : ${cleanNom}`,
-        `Email : ${cleanEmail}`,
-        "",
-        "Message :",
-        cleanMessage
-      ].join("\n")
-    });
-
-    console.log("[5] E-MAIL ENVOYÉ");
-    console.log("Message ID :", info.messageId);
-    console.log("Acceptés :", info.accepted);
-    console.log("Refusés :", info.rejected);
+    console.log("[4] E-mail accepté par Resend.");
+    console.log("Identifiant :", result.id);
 
     return res.status(200).json({
       success: true,
       message: "Ton message a bien été envoyé !"
     });
-
   } catch (error) {
-    // 10. Diagnostic détaillé
-    console.error("\n========== ERREUR D'ENVOI ==========");
-    console.error("Nom :", error.name);
-    console.error("Code :", error.code);
-    console.error("Commande SMTP :", error.command);
-    console.error("Réponse SMTP :", error.response);
-    console.error("Code de réponse SMTP :", error.responseCode);
-    console.error("Message :", error.message);
-    console.error("Stack :", error.stack);
-    console.error("====================================");
+    console.error("[ERREUR RESEND]", {
+      name: error.name,
+      code: error.code,
+      message: error.message
+    });
 
     return res.status(500).json({
       success: false,
@@ -180,21 +142,6 @@ app.post("/api/contact", async (req, res) => {
   }
 });
 
-// 11. Gestion des erreurs JSON
-app.use((error, req, res, next) => {
-  console.error("[ERREUR EXPRESS]", error.message);
-
-  if (res.headersSent) {
-    return next(error);
-  }
-
-  return res.status(400).json({
-    success: false,
-    message: "Requête invalide."
-  });
-});
-
-// 12. Démarrage
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
