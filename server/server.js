@@ -18,7 +18,7 @@ app.use(cors({
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"]
 }));
-
+//test
 app.use(express.json({ limit: "10kb" }));
 
 // Vérifier que le serveur fonctionne.
