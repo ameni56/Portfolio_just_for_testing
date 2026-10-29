@@ -469,7 +469,7 @@
         // IMPORTANT :
         // Le backend doit être démarré sur le port 3000.
         const response = await fetch(
-          "http://localhost:3000/api/contact",
+          "https://portfolio-just-for-testing.onrender.com/api/contact",
           {
             method: "POST",
             headers: {
