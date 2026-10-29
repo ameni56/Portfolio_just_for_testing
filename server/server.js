@@ -90,8 +90,8 @@ app.post("/api/contact", async (req, res) => {
       message: "Ton message a bien été envoyé !"
     });
   } catch (error) {
-    console.error("Erreur complète d'envoi :", error);
-
+  console.error("Erreur complète d'envoi :", error);
+  console.error("Code :", error.code, "| Réponse SMTP :", error.response);
     return res.status(500).json({
       success: false,
       message: "Impossible d'envoyer le message. Réessaie plus tard."
